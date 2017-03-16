@@ -7,8 +7,8 @@ of topics, from libraries and language features to style and usage.
 
 ## Build System
 
-- Stack with Hpack is our build system of choice. On a per-project basis, this allows us to write
-  concise `package.yaml` files that are generated into version-compatible `.cabal` files.
+- Stack with Hpack is build system of choice. On a per-project basis, this permits concise
+  `package.yaml` files that are generated into version-compatible `.cabal` files.
 
 ### Language Features
 
@@ -61,7 +61,7 @@ Pragmas to probably panic about:
 
 ### Libraries
 
-Libraries (frameworks) essential to our core code:
+Essential libraries and frameworks:
 
 - `aeson` for JSON parsing and serialization
 - `classy-prelude` like prelude, but way better
@@ -73,7 +73,7 @@ Libraries (frameworks) essential to our core code:
 
 ## General Style
 
-In general, we adhere to a certain flavor of style for a cohesive feel:
+In general, adhere to a certain flavor of style for a cohesive feel:
 
 - Indentation level is 2 spaces
 - Column width is 100
@@ -81,16 +81,15 @@ In general, we adhere to a certain flavor of style for a cohesive feel:
   - Multiline function calls should add an indentation level to any extra lines in order to
     distinguish those lines from surrounding code
   - Multiline function definitions should align arrows (`->`)
-  - Multiline lists should add a space after the list-opening character ('[' or '('), align the
+  - Multiline lists should add a space after the list-opening character (`[` or `(`), align the
     first character of each line, and start each line with a comma
   - Multiline imports should add a newline after the module name and indent
-- No wildcard imports except for ClassyPrelude
-  - Should we allow this in tests?
+- No wildcard imports except for `ClassyPrelude`
 - In general, no orphan instances (sometimes, _sometimes_ they may be necessary)
   - Okay in tests
-  - Always write these in a separate module named <ClassName>OrphanInstances.hs
+  - Always write these in a separate module named `<ClassName>OrphanInstances.hs`
 - Try to stay away from importing multiple modules qualified under the same name unless they make
-  sense (`import qualified Foo as F` and `import qualified Bar as F` is bad)
+  sense (`import qualified Foo as F` and `import qualified Bar as F` together is bad)
 - Record should contain the entire type name in camel case
   - If lenses are generated for this type, each record name should start with an underscore
   - An added advantage of declaring record types this way is that derived JSON instances do not have
