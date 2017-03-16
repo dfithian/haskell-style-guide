@@ -2,9 +2,8 @@
 
 ## Introduction
 
-This document is intended to be used as a reference for Haskell style and usage within the TVision
-Insights ecosystem. It covers a range of topics, from libraries and language features to style and
-usage.
+This document is intended to be used as a reference for Haskell style and usage. It covers a range
+of topics, from libraries and language features to style and usage.
 
 ## Build System
 
