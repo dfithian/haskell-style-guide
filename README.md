@@ -32,21 +32,21 @@ Pragmas to use anytime (and should be turned on by default):
 - `FlexibleInstances` to relax some restrictions on the form of a class signature
 - `GADTs` to allow generalized ADTs
 - `GeneralizedNewtypeDeriving` to derive any class through a newtype
-- `LambdaCase` to desugar `case of` to `\ x -> case x of`
+- `LambdaCase` to desugar `\ case` to `\ x -> case x of`
 - `MultiParamTypeClasses` to have classes with multiple parameters
 - `NamedFieldPuns` to bind local names to field names of a record
 - `NoImplicitPrelude` to allow use of classy prelude
 - `NoMonomorphismRestriction` to prevent the compiler from filling in free types with defaults
 - `OverloadedStrings` to allow string literals to be interpreted as different string representations
 - `PackageImports` to allow qualified imports
-- `PolyKinds` to allow kinds to apply to multiple types in a declaration (the `m` in `m a`)
+- `PolyKinds` to allow declarations to have kind variables, like `data Proxy (a :: k)`
 - `QuasiQuotes` to help template haskell
 - `RankNTypes` to put all variable declarations within the same `forall`
 - `RecordWildCards` to allow wildcards in data types
-- `ScopedTypeVariables` for an implicit `forall a b...` prepended to function declarations
+- `ScopedTypeVariables` to allow usage of explicit `forall` type variables to be used in the body
 - `StandaloneDeriving` to allow deriving after type declaration
 - `TemplateHaskell` to turn on template haskell
-- `TupleSections` to allow `(,)` to desugar to `\ a -> \ b -> (a, b)`
+- `TupleSections` to allow `(a,)` to desugar to `\ b -> (a, b)`
 - `TypeFamilies` to allow type families
 - `TypeOperators` to allow types as operators
 - `ViewPatterns` to allow function application on values at the time they are unwrapped
