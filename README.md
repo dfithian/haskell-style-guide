@@ -85,15 +85,74 @@ In general, adhere to a certain flavor of style for a cohesive feel:
     first character of each line, and start each line with a comma
   - Multiline imports should add a newline after the module name and indent
 - No wildcard imports except for `ClassyPrelude`
+  - Okay in tests if you wildcard import the module you are testing
 - In general, no orphan instances (sometimes, _sometimes_ they may be necessary)
   - Okay in tests
   - Always write these in a separate module named `<ClassName>OrphanInstances.hs`
 - Try to stay away from importing multiple modules qualified under the same name unless they make
   sense (`import qualified Foo as F` and `import qualified Bar as F` together is bad)
-- Record should contain the entire type name in camel case
+- Record names should contain the entire type name in camel case
   - If lenses are generated for this type, each record name should start with an underscore
   - An added advantage of declaring record types this way is that derived JSON instances do not have
     collisions
+
+### Examples
+
+Some examples as a guide. These aren't rules, but use best judgement to write code that is readable
+and easy to understand.
+
+#### `let` clauses
+
+When using `let` clauses, try to define as many clauses as possible in the same block without
+reusing the `let` keyword. For pure functions, this is enforced by the compiler, but within a `do`
+block it is up to the programmer. Try to avoid this:
+
+```haskell
+foo :: a -> b -> c -> m d
+foo x y z = do
+  let bar = baz x
+  let bin = qux y
+  ...
+```
+
+#### `where` clauses
+
+`Where` clauses are nice when a function can be written concisely using functions that need not be
+at the module level. A simple example is a fold:
+
+```haskell
+foo :: [a] -> Map b c
+foo = foldr makeMap mempty
+  where
+    makeMap = ...
+```
+
+`Where` clauses are also nice when using explicit type signatures.
+
+`Where` clauses should add an indentation level to the `where` keyword, then a newline, then another
+indentation level, unless the function (or value) can be inlined.
+
+#### Being point-free
+
+Being point-free is great until it becomes confusing. For instance, don't abuse `flip` in favor of
+writing a function point-free. Operators can also be confusing in point-free syntax, as they often
+need extra parentheses. Here's a bad example of a point free function:
+
+```haskell
+foo :: a -> b -> c -> Either Text d
+foo x y = either ((<> " messed up") . ("this value is " <>)) id . flip (flip (bar x) y)
+```
+
+This is better:
+
+```haskell
+foo :: a -> b -> c -> Either Text d
+foo x y z = either (\ msg -> "this value is " <> msg <> " messed up") id $ bar z x y
+```
+
+#### Providing types that _could_ be inferred
+
+Provide an explicit type (or a comment!) when code is confusing.
 
 ## Usage
 
@@ -156,3 +215,15 @@ GADT constructor's return type.
 Constraints are more flexible, as the only constraints that are needed for a function are the ones
 that are actually used. Monad transformers are much more static, as they require the valid monad
 stack.
+
+### ExceptT vs EitherT
+
+Always use `ExceptT`. It is older and more widely supported.
+
+### `fail` vs `throwError` vs `error`
+
+In general, try not to use exceptions (`fail`). Sometimes they are unavoidable, if `MonadError`
+(`throwError`) is not on the stack. `MonadError` is almost always preferable, since it is
+recoverable. In general an exception will be considered a server error.
+
+Never, ever, _ever_ use `error`.
