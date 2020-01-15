@@ -104,6 +104,7 @@ In general, adhere to a certain flavor of style for a cohesive feel:
         module FooSpec where
         import ClassyPrelude
         import LiterallyAnythingElseDontYouDareWildcard ()
+
         -- imported wildcard because it's being tested
         import Foo
         ```
@@ -162,9 +163,9 @@ The fields in the declaration of a record type should be aligned:
 
 ```haskell
 data SomeReallyCoolType = SomeReallyCoolType
- { _someReallyCoolTypeName :: Text -- ^What name is for.
- , _someReallyCoolTypeDetailInfo :: Foo -- ^Something about detail.
- }
+  { _someReallyCoolTypeName :: Text -- ^What name is for.
+  , _someReallyCoolTypeDetailInfo :: Foo -- ^Something about detail.
+  }
 makeLenses ``SomeReallyCoolType
 ```
 
@@ -173,9 +174,9 @@ If you run out of space, the haddock comments can be moved to the line following
 ```haskell
 ...
  pure $ SomeReallyCoolType
- { _someReallyCoolTypeName = foo bar baz $ flarp <$> mconcat zebras
- , _someReallyCoolTypeDetailInfo = anotherLongExpression of someValues
- }
+   { _someReallyCoolTypeName = foo bar baz $ flarp <$> mconcat zebras
+   , _someReallyCoolTypeDetailInfo = anotherLongExpression of someValues
+   }
 ```
 
 #### Being point-free
